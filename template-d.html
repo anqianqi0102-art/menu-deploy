@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>菜单 · 中式红金</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF8F0;
+    --dark: #FFFFFF;
+    --brown: #8B0000;
+    --warm-gray: rgba(254,237,27,0.75);
+    --gold: #FEED1B;
+    --season-warm: #C0392B;
+    --season-bg: #FFF5E8;
+    --rule: #FEED1B;
+    --light-rule: #FEED1B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #111111;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    min-height: 100vh;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    background: #B80000;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* 装饰性背景纹理 */
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+      radial-gradient(ellipse at 5% 15%, rgba(184,147,90,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 95% 85%, rgba(184,147,90,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .inner {
+    padding: 10mm 32mm 10mm 32mm;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── 顶部 ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+    padding-bottom: 4mm;
+    padding-top: 0;
+    position: relative;
+  }
+
+
+  .brand-block {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .brand-vline {
+    display: none;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .brand-eyebrow {
+    display: none;
+  }
+
+  .brand-cn {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    color: var(--dark);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .brand-rule {
+    width: 32px;
+    height: 0.5px;
+    background: #FEED1B;
+    margin: 8px 0 6px;
+  }
+
+  .brand-en {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.38em;
+    color: var(--warm-gray);
+    margin-top: 0;
+    display: block;
+  }
+
+  /* QR 区域 */
+  .qr-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .qr-frame {
+    width: 88px;
+    height: 88px;
+    border: 1px solid var(--rule);
+    padding: 4px;
+    background: white;
+    position: relative;
+  }
+
+  .qr-frame::before, .qr-frame::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-color: #FEED1B;
+    border-style: solid;
+  }
+
+  .qr-frame::before {
+    top: -1px; left: -1px;
+    border-width: 1.5px 0 0 1.5px;
+  }
+
+  .qr-frame::after {
+    bottom: -1px; right: -1px;
+    border-width: 0 1.5px 1.5px 0;
+  }
+
+  .qr-img {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  .qr-frame-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--rule);
+    display: block;
+  }
+
+  .qr-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ── 分类标题 ── */
+  .section {
+    margin-bottom: 2mm;
+  }
+
+  .section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1mm;
+    margin-top: 4mm;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 0.5px;
+    background: var(--rule);
+  }
+
+  .section-title-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .section-title-cn {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: #B80000;
+    background: #FEED1B;
+    text-align: center;
+    white-space: nowrap;
+    padding: 3px 14px;
+    border-radius: 2px;
+    border: 1.5px solid #FEED1B;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+  }
+
+  .section-title-en {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* 季节限定 section — 和普通分类统一风格 */
+  .section-season {
+    margin-top: 0;
+    margin-bottom: 2mm;
+  }
+
+  .season-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
+    padding-bottom: 1.5mm;
+  }
+
+  .season-line {
+    flex: 1;
+    height: 0.5px;
+    background: rgba(255,255,255,0.25);
+  }
+
+  .season-title-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .season-title-cn {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: #B80000;
+    background: #FEED1B;
+    text-align: center;
+    white-space: nowrap;
+    padding: 3px 14px;
+    border-radius: 2px;
+    border: 1.5px solid #FEED1B;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+  }
+
+  .season-title-en {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .season-badge {
+    display: none;
+  }
+
+  /* ── 菜单项 ── */
+.menu-item {
+display: flex;
+align-items: center;
+padding: 1.2mm 0;
+position: relative;
+}
+
+  .item-name {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.05em;
+    flex: 0 0 auto;
+  }
+
+  .item-note {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.06em;
+    margin-left: 4px;
+    flex: 0 0 auto;
+  }
+
+  .item-dots {
+    flex: 1;
+    margin: 0 8px;
+    position: relative;
+    overflow: hidden;
+    height: 1em;
+  }
+
+  .item-dots::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 0; right: 0;
+    border-bottom: 0.5px dotted rgba(255,255,255,0.25);
+  }
+
+  /* 推荐标记 */
+  .rec-mark {
+    flex: 0 0 auto;
+    margin-left: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 17px;
+    padding: 0 6px;
+    border: 1px solid #FEED1B;
+    background: rgba(254,237,27,0.15);
+    vertical-align: middle;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    color: #FEED1B;
+    letter-spacing: 0.05em;
+    line-height: 17px;
+    border-radius: 2px;
+  }
+
+  .rec-mark::before {
+    content: '♥';
+    font-size: 10px;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 0;
+  }
+
+  .rec-mark::after {
+    content: '推荐';
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .item-price {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+    flex: 0 0 auto;
+    min-width: 36px;
+    text-align: right;
+  }
+
+  .item-unit {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin-left: 1px;
+  }
+
+  /* 季节限定菜单项颜色 */
+  .season-item .item-unit {
+    color: #FEED1B;
+  }
+
+  .season-item .item-name {
+    color: #FEED1B;
+  }
+
+  .season-item .item-price {
+    color: #FEED1B;
+  }
+
+  /* ── 单列布局（普通咖啡）── */
+  .two-col {
+    display: block;
+  }
+
+  /* ── 手机适配：流式布局，放弃 A4 纸形态 ── */
+  @media (max-width: 700px) {
+    body {
+      padding: 0 0 100px 0;  /* 底部留空给工具栏 */
+      background: #111111;
+      display: block;
+    }
+    .page {
+      width: 100%;
+      height: auto;          /* 取消固定高度，内容自然撑开 */
+      overflow: visible;     /* 允许内容溢出/滚动 */
+      box-shadow: none;
+    }
+    .inner {
+      padding: 12vw 6vw 6vw;  /* 手机上用 vw 做边距 */
+    }
+    .brand-cn {
+      font-size: 9vw;        /* 标题字体跟屏幕走 */
+    }
+    .item-name {
+      font-size: 4.2vw;
+    }
+    .item-price {
+      font-size: 5vw;
+      min-width: 8vw;
+    }
+    .item-unit { font-size: 3.2vw; }
+    .section-title-cn { font-size: 3.2vw; }
+    .section-title-en { font-size: 2.2vw; }
+    .season-title-cn  { font-size: 3.2vw; }
+    .season-title-en  { font-size: 2.2vw; }
+    .qr-frame { width: 72px; height: 72px; }
+  }
+
+  /* ── 打印优化 ── */
+  @media print {
+    body {
+      background: none;
+      padding: 0;
+    }
+    .page {
+      box-shadow: none;
+      width: 210mm;
+      min-height: 297mm;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="inner">
+
+    <!-- 顶部 Header -->
+    <div class="header">
+<div class="brand-block">
+<div class="brand-vline"></div>
+<div class="brand-text">
+<span class="brand-eyebrow">深夜限定 · 治愈肠胃</span>
+<div class="brand-cn">宵夜小摊</div>
+<div class="brand-rule"></div>
+<span class="brand-en">营业时间 20:00 — 凌晨 3:00</span>
+</div>
+</div>
+      <div class="qr-block">
+<label class="qr-frame" style="cursor:pointer">
+<div class="qr-frame-placeholder"></div>
+<div class="qr-replace-hint">点击替换</div>
+<img class="qr-img" src="">
+<input type="file" id="qr-file-input" accept="image/*" style="opacity:0;position:absolute;width:0;height:0;pointer-events:none;" onchange="qrFileSelected(this)">
+</label>
+        <div class="qr-label">扫一扫微信加好友</div>
+      </div>
+    </div>
+
+    <!-- 季节限定 -->
+    <div class="section-season">
+      <div class="season-header">
+        <div class="season-line"></div>
+        <div class="season-title-block">
+          <span class="season-title-cn">今日特惠</span>
+        </div>
+        <div class="season-line"></div>
+      </div>
+      <div class="menu-item season-item">
+        <span class="item-name">招牌炒面</span>
+        <span class="item-dots"></span>
+        <span class="item-price">12</span><span class="item-unit">元</span>
+      </div>
+      <div class="menu-item season-item">
+        <span class="item-name">烤冷面</span>
+        <span class="item-dots"></span>
+        <span class="item-price">10</span><span class="item-unit">元</span>
+      </div>
+      <div class="menu-item season-item">
+        <span class="item-name">麻辣烫（素）</span>
+        <span class="item-dots"></span>
+        <span class="item-price">18</span><span class="item-unit">元</span>
+      </div>
+      <div class="menu-item season-item">
+        <span class="item-name">麻辣烫（加肉）</span>
+        <span class="item-dots"></span>
+        <span class="item-price">25</span><span class="item-unit">元</span>
+      </div>
+    </div>
+
+    <!-- 咖啡 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <div class="section-title-block">
+          <span class="section-title-cn">主食小吃</span>
+        </div>
+        <div class="section-line"></div>
+      </div>
+      <div class="two-col">
+          <div class="menu-item">
+            <span class="item-name">葱油拌面</span>
+            <span class="item-dots"></span>
+            <span class="item-price">10</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">蛋炒饭</span>
+            <span class="item-dots"></span>
+            <span class="item-price">12</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">牛肉炒河粉</span><span class="rec-mark"></span>
+            <span class="item-dots"></span>
+            <span class="item-price">18</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">泡椒猪杂面</span>
+            <span class="item-dots"></span>
+            <span class="item-price">16</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">酸辣粉</span><span class="rec-mark"></span>
+            <span class="item-dots"></span>
+            <span class="item-price">13</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">炸酱面</span>
+            <span class="item-dots"></span>
+            <span class="item-price">14</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">砂锅粥</span><span class="rec-mark"></span>
+            <span class="item-dots"></span>
+            <span class="item-price">15</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">煎饼果子</span>
+            <span class="item-dots"></span>
+            <span class="item-price">8</span><span class="item-unit">元</span>
+          </div>
+      </div>
+    </div>
+
+    <!-- 无咖啡因 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <div class="section-title-block">
+          <span class="section-title-cn">烧烤串串</span>
+        </div>
+        <div class="section-line"></div>
+      </div>
+      <div class="two-col">
+          <div class="menu-item">
+            <span class="item-name">羊肉串</span>
+            <span class="item-dots"></span>
+            <span class="item-price">3</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">烤鸡翅</span><span class="rec-mark"></span>
+            <span class="item-dots"></span>
+            <span class="item-price">15</span><span class="item-unit">元</span>
+          </div>
+          <div class="menu-item">
+            <span class="item-name">烤鱿鱼</span>
+            <span class="item-dots"></span>
+            <span class="item-price">25</span><span class="item-unit">元</span>
+          </div>
+      </div>
+    </div>
+
+    
+
+  </div>
+</div>
+
+<!-- ══ 编辑工具栏 ══ -->
+<div id="edit-toolbar">
+  <div id="state-default">
+    <button id="btn-edit" onclick="enterEdit()">✏️ 编辑菜单</button>
+    <button id="btn-export" onclick="exportImage()">🖼️ 导出高清PNG</button>
+    <button id="btn-export-toggle" onclick="toggleExportMenu(event)">🖼️ 导出图片 ▾</button>
+  </div>
+  <!-- 导出选项浮层 -->
+  <div id="export-menu">
+    <div class="exp-item" onclick="exportImage()">
+      <span class="exp-title">🖨️ 打印版</span>
+      <span class="exp-desc">高清 PNG，适合打印纸质菜单</span>
+    </div>
+    <div class="exp-divider"></div>
+    <div class="exp-item" onclick="exportMobile()">
+      <span class="exp-title">📲 分享版</span>
+      <span class="exp-desc">适合发群里，手机查看</span>
+    </div>
+  </div>
+  <div id="state-editing" style="display:none">
+    <span id="edit-hint">点击菜名/价格直接修改</span>
+    <button id="btn-add-item" onclick="addItem()">＋ 新增菜品</button>
+    <button id="btn-save" onclick="saveEdit()">✅ 保存</button>
+    <button id="btn-cancel" onclick="cancelEdit()">❌ 取消</button>
+  </div>
+</div>
+
+<style>
+#edit-toolbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #6B0000ee;
+  backdrop-filter: blur(8px);
+  color: #FAF7F2;
+  border-radius: 40px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+  z-index: 9999;
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+  max-width: calc(100vw - 24px);
+}
+@media (max-width: 700px) {
+  /* 默认态：固定在底部 */
+  #edit-toolbar {
+    bottom: max(16px, env(safe-area-inset-bottom));
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 32px;
+  }
+  #edit-toolbar button {
+    padding: 10px 18px;
+    font-size: 15px;
+    min-height: 44px;
+  }
+  #edit-hint { display: none; }
+  /* 编辑态：移到顶部，让键盘和内容区域不被遮挡 */
+  #edit-toolbar.toolbar-top {
+    bottom: auto;
+    top: 0;
+    border-radius: 0 0 24px 24px;
+    width: 100%;
+    max-width: 100%;
+    left: 0;
+    transform: none;
+    justify-content: center;
+    padding: 10px 16px max(10px, env(safe-area-inset-top));
+    gap: 8px;
+  }
+  /* 编辑态顶部时给页面内容加顶部 padding，防止被工具栏遮住 */
+  body.editing-mobile {
+    padding-top: 64px;
+    padding-bottom: 20px;
+  }
+}
+#state-default, #state-editing { display: flex; align-items: center; gap: 8px; }
+#edit-hint { color: #FEED1B; font-size: 12px; padding: 0 4px; }
+#edit-toolbar button {
+  border: none; border-radius: 20px; padding: 7px 16px;
+  font-size: 13px; cursor: pointer;
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+}
+#btn-edit      { background: #FEED1B; color: #1A0A00; font-weight: 700; }
+#btn-export    { background: #2D3748; color: #ddd; }
+#btn-add-item  { background: #3D2B1F; color: #FAF7F2; border: 1px solid #FEED1B; }
+#btn-add-item:disabled { background: #555; color: #888; border-color: #666; cursor: not-allowed; opacity: 0.5; }
+#btn-save      { background: #3D8C5A; color: white; }
+#btn-cancel    { background: #555; color: white; }
+/* 编辑模式可编辑元素 */
+.edit-mode [contenteditable="true"] {
+  outline: 1.5px dashed rgba(255,255,255,0.6); border-radius: 3px;
+  padding: 1px 3px; cursor: text; background: rgba(255,255,255,0.12);
+}
+.edit-mode [contenteditable="true"]:focus {
+  outline: 2px solid rgba(255,255,255,0.95); background: rgba(255,255,255,0.20);
+}
+/* 标题牌匾编辑时保持黄底 */
+.edit-mode .section-title-cn[contenteditable="true"],
+.edit-mode .season-title-cn[contenteditable="true"] {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  cursor: text !important;
+  background: #FEED1B !important; color: #B80000 !important;
+  outline: 2px dashed #B80000 !important;
+}
+.edit-mode .section-title-cn[contenteditable="true"]:focus,
+.edit-mode .season-title-cn[contenteditable="true"]:focus {
+  background: #FEED1B !important; color: #B80000 !important;
+  outline: 2px solid #B80000 !important;
+}
+/* 删除按钮 — 浮在行内右侧 */
+.delete-btn {
+  display: none; position: absolute; right: 0; top: 50%;
+  transform: translateY(-50%); width: 24px; height: 24px;
+  background: #c0392b; color: white; border: none; border-radius: 50%;
+  font-size: 15px; line-height: 24px; text-align: center; cursor: pointer; padding: 0; z-index: 10;
+}
+.edit-mode .menu-item { position: relative; padding-right: 32px; }
+/* 桌面端：hover 才显示 */
+.edit-mode .menu-item:hover .delete-btn,
+.edit-mode .menu-item:focus-within .delete-btn,
+.edit-mode .delete-btn:hover { display: block; cursor: pointer; }
+/* 手机端：常显删除按钮 */
+@media (max-width: 700px) {
+  .edit-mode .delete-btn { display: block; }
+}
+/* 推荐标签删除角标 */
+.rec-mark-del {
+  display: none; position: absolute; top: -6px; right: -6px;
+  width: 13px; height: 13px; background: #c0392b; color: white;
+  border-radius: 50%; font-size: 9px; line-height: 13px; text-align: center;
+  cursor: pointer; font-style: normal; font-family: sans-serif;
+}
+.edit-mode .rec-mark { position: relative; }
+.edit-mode .rec-mark .rec-mark-del { display: block; }
+/* 推荐添加按钮 */
+.rec-toggle {
+  display: none; font-size: 9px; padding: 0; border: none;
+  color: #aaa; cursor: pointer; background: transparent; margin-left: 5px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.edit-mode .rec-toggle { display: inline-block; }
+.edit-mode .menu-item:has(.rec-mark) .rec-toggle { display: none; }
+/* 二维码编辑提示 */
+.qr-frame input[type=file] { pointer-events: none; }
+.edit-mode .qr-frame input[type=file] { pointer-events: auto; }
+.page:not(.edit-mode) label.qr-frame { pointer-events: none; }
+.edit-mode .qr-frame {
+  cursor: pointer; outline: 1.5px dashed #FEED1B; outline-offset: 2px;
+  position: relative; overflow: hidden;
+}
+.qr-replace-hint {
+  display: none; position: absolute; inset: 0;
+  align-items: center; justify-content: center;
+  background: rgba(10,10,10,0.95); font-family: 'PingFang SC', sans-serif;
+  font-size: 11px; color: #FEED1B; pointer-events: none; z-index: 2;
+}
+.edit-mode .qr-replace-hint { display: flex; }
+/* 桌面：只显示原导出按钮；手机：隐藏原导出按钮，显示分裂按钮 */
+#btn-export-toggle { display: none; }
+@media (max-width: 700px) {
+  #btn-export { display: none !important; }
+  #btn-export-toggle { display: inline-flex !important; align-items: center; }
+}
+/* 导出菜单浮层 */
+#export-menu {
+  display: none;
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1A1410f5;
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 99999;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+}
+#export-menu.open { display: block; }
+.exp-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.exp-item:active { background: rgba(184,147,90,0.15); }
+.exp-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #FAF7F2;
+  letter-spacing: 0.02em;
+}
+.exp-desc {
+  font-size: 12px;
+  color: #9B8B76;
+  letter-spacing: 0.01em;
+}
+.exp-divider {
+  height: 0.5px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 18px;
+}
+@media print { #edit-toolbar { display: none !important; } }
+
+/* ══ 新增菜品弹窗 ══ */
+#add-item-modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  display: flex; align-items: flex-end; justify-content: center;
+  z-index: 99999; padding: 0;
+}
+#aim-box {
+  background: #0A0A0A; width: 100%; max-width: 480px;
+  border-radius: 20px 20px 0 0; padding: 24px 20px 40px;
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.2);
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+}
+#aim-title {
+  font-size: 17px; font-weight: 600; color: #2C1810;
+  text-align: center; margin-bottom: 20px;
+}
+#aim-label, #aim-label2, #aim-label3 {
+  font-size: 12px; color: #888; margin-bottom: 8px; margin-top: 16px;
+}
+#aim-cats {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.aim-cat {
+  padding: 8px 16px; border-radius: 20px;
+  border: 1px solid var(--rule); background: white;
+  font-size: 14px; color: var(--brown); cursor: pointer;
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+}
+.aim-cat-active {
+  background: #FEED1B; color: white; border-color: #FEED1B;
+}
+#aim-name, #aim-price {
+  width: 100%; padding: 12px 14px; border-radius: 10px;
+  border: 1px solid var(--rule); background: white;
+  font-size: 16px; color: #2C1810; outline: none;
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+}
+#aim-name:focus, #aim-price:focus { border-color: #FEED1B; }
+#aim-btns {
+  display: flex; gap: 10px; margin-top: 20px;
+}
+#aim-cancel {
+  flex: 1; padding: 13px; border-radius: 12px;
+  border: 1px solid var(--rule); background: white;
+  font-size: 15px; color: #888; cursor: pointer;
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+}
+#aim-confirm {
+  flex: 2; padding: 13px; border-radius: 12px;
+  border: none; background: #FEED1B;
+  font-size: 15px; color: white; cursor: pointer; font-weight: 600;
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+}
+</style>
+
+<script>
+function showState(s) {
+  document.getElementById('state-default').style.display = s === 'default' ? 'flex' : 'none';
+  document.getElementById('state-editing').style.display = s === 'editing' ? 'flex' : 'none';
+}
+
+function addRecMarkDel(markEl, onRemove) {
+  const del = document.createElement('i');
+  del.className = 'rec-mark-del';
+  del.textContent = '×';
+  del.onclick = (e) => {
+    e.stopPropagation();
+    markEl.remove();
+    if (onRemove) onRemove();
+  };
+  markEl.appendChild(del);
+}
+
+function enterEdit() {
+  window._snapshot = document.querySelector('.page').innerHTML;
+  document.querySelector('.page').classList.add('edit-mode');
+  showState('editing');
+  // 手机上工具栏移到顶部，避免遮挡键盘和焦点
+  if (isMobileDevice()) {
+    document.getElementById('edit-toolbar').classList.add('toolbar-top');
+    document.body.classList.add('editing-mobile');
+  }
+  document.querySelectorAll('.item-name, .item-price, .brand-cn, .brand-en, .qr-label, .season-title-cn, .section-title-cn').forEach(el => {
+    el.contentEditable = 'true';
+    el.spellcheck = false;
+    if (el.classList.contains('item-price')) {
+      el.inputMode = 'decimal';
+    }
+  });
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.style.position = 'relative';
+    if (!item.querySelector('.delete-btn')) {
+      const btn = document.createElement('button');
+      btn.className = 'delete-btn';
+      btn.textContent = '×';
+      btn.onclick = () => { if (confirm('确定删除这道菜？')) { item.remove(); checkCapacity(); } };
+      item.appendChild(btn);
+    }
+    if (!item.querySelector('.rec-toggle')) {
+      const recToggle = document.createElement('span');
+      recToggle.className = 'rec-toggle';
+      recToggle.textContent = '＋♥ 推荐';
+      recToggle.onclick = () => {
+        const m = document.createElement('span'); m.className = 'rec-mark';
+        item.querySelector('.item-name').after(m);
+        addRecMarkDel(m, () => { recToggle.style.display = ''; });
+        recToggle.style.display = 'none';
+      };
+      item.querySelector('.item-name').after(recToggle);
+      const existMark = item.querySelector('.rec-mark');
+      if (existMark && !existMark.querySelector('.rec-mark-del')) {
+        addRecMarkDel(existMark, () => { recToggle.style.display = ''; });
+        recToggle.style.display = 'none';
+      }
+    }
+  });
+  // 手机上：点击可编辑元素时自动滚动，确保不被顶部工具栏遮住
+  if (isMobileDevice()) {
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      el.addEventListener('focus', function() {
+        setTimeout(() => {
+          const rect = el.getBoundingClientRect();
+          const toolbarH = 70; // 顶部工具栏高度
+          if (rect.top < toolbarH + 8) {
+            window.scrollBy({ top: rect.top - toolbarH - 8, behavior: 'smooth' });
+          }
+        }, 300); // 等键盘弹出后再判断
+      });
+    });
+  }
+  checkCapacity();
+}
+
+// 用桌面 A4 逻辑计算最大可放菜品数，存入 window._maxItems
+// 在一个隐藏的桌面尺寸副本上模拟，不影响当前页面
+function calcMaxItems() {
+  const page = document.querySelector('.page');
+  // 克隆一份，以桌面尺寸（210mm × 297mm）离屏计算
+  const clone = page.cloneNode(true);
+  clone.style.cssText = 'position:fixed;left:-9999px;top:0;width:210mm;height:297mm;overflow:hidden;pointer-events:none;';
+  document.body.appendChild(clone);
+  const inner = clone.querySelector('.inner');
+  const items = Array.from(clone.querySelectorAll('.menu-item'));
+  items.forEach(el => el.style.display = 'none');
+  let count = 0;
+  for (let i = 0; i < items.length; i++) {
+    items[i].style.display = '';
+    if (inner.scrollHeight > clone.clientHeight + 1) break;
+    count = i + 1;
+  }
+  document.body.removeChild(clone);
+  window._maxItems = count;
+
+  // 同时计算手机端导出的固定高度：以 210mm 宽、全部菜品显示时量出 scrollHeight
+  // 这个高度 = 满载时内容高，下边距 = 上边距（对称）
+  const clone2 = page.cloneNode(true);
+  clone2.style.cssText = 'position:fixed;left:-9999px;top:0;width:210mm;height:auto;pointer-events:none;';
+  clone2.querySelectorAll('.delete-btn,.rec-toggle,.rec-mark-del').forEach(el => el.remove());
+  const inner2 = clone2.querySelector('.inner');
+  if (inner2) inner2.style.cssText = 'padding:10mm 32mm 10mm 32mm;position:relative;z-index:1;';
+  document.body.appendChild(clone2);
+  const topPx = parseFloat(getComputedStyle(inner2).paddingTop) || Math.round(10 * 3.7795);
+  const fullH = clone2.scrollHeight + topPx; // 内容高 + 上边距 = 下边距也等于上边距
+  document.body.removeChild(clone2);
+  window._mobileExportHeight = fullH;
+}
+
+// 检测菜单是否已满，双端统一用 _maxItems 数量判断
+function checkCapacity() {
+  const addBtn = document.getElementById('btn-add-item');
+  if (!addBtn) return;
+  if (!window._maxItems) return; // 还没算完，先不隐藏
+  const current = document.querySelectorAll('.menu-item').length;
+  addBtn.style.display = current >= window._maxItems ? 'none' : '';
+}
+
+// 精确裁剪：逐项检测，超出就删掉该项及后续所有项
+function trimToFitPrecise() {
+  const page = document.querySelector('.page');
+  const inner = page.querySelector('.inner');
+  const items = Array.from(document.querySelectorAll('.menu-item'));
+  // 先把所有菜品隐藏，然后逐个显示，找临界点
+  items.forEach(el => el.style.display = 'none');
+  let lastFit = -1;
+  for (let i = 0; i < items.length; i++) {
+    items[i].style.display = '';
+    if (inner.scrollHeight > page.clientHeight + 1) {
+      // 加上第 i 项就超了，lastFit 是最后能放的
+      break;
+    }
+    lastFit = i;
+  }
+  // 删掉 lastFit+1 及之后的所有项
+  items.slice(lastFit + 1).forEach(el => el.remove());
+}
+
+function saveEdit() {
+  document.querySelector('.page').classList.remove('edit-mode');
+  document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  document.querySelectorAll('.delete-btn, .rec-toggle, .rec-mark-del').forEach(el => el.remove());
+  window._snapshot = null;
+  document.getElementById('edit-toolbar').classList.remove('toolbar-top');
+  document.body.classList.remove('editing-mobile');
+  showState('default');
+}
+
+function cancelEdit() {
+  if (window._snapshot) {
+    document.querySelector('.page').innerHTML = window._snapshot;
+    window._snapshot = null;
+  }
+  document.querySelector('.page').classList.remove('edit-mode');
+  document.getElementById('edit-toolbar').classList.remove('toolbar-top');
+  document.body.classList.remove('editing-mobile');
+  showState('default');
+}
+
+function toggleExportMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('export-menu');
+  menu.classList.toggle('open');
+}
+document.addEventListener('click', function() {
+  const menu = document.getElementById('export-menu');
+  if (menu) menu.classList.remove('open');
+});
+
+function exportMobile() {
+  document.getElementById('export-menu').classList.remove('open');
+  const btn = document.getElementById('btn-export-toggle');
+  btn.textContent = '⏳ 生成中...';
+  btn.disabled = true;
+  function doMobileExport() {
+    const page = document.querySelector('.page');
+    // 直接截当前页面渲染结果（手机宽度、vw字体、紧凑边距）
+    html2canvas(page, { scale: 3, useCORS: true, backgroundColor: '#FAF7F2', logging: false }).then(canvas => {
+      canvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'coffee-menu-share.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 3000);
+        btn.textContent = '🖼️ 导出图片 ▾';
+        btn.disabled = false;
+      }, 'image/png');
+    }).catch(() => {
+      alert('导出失败，请重试');
+      btn.textContent = '🖼️ 导出图片 ▾';
+      btn.disabled = false;
+    });
+  }
+  if (window.html2canvas) { doMobileExport(); }
+  else {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload = doMobileExport;
+    s.onerror = () => { alert('需要联网才能导出'); btn.textContent = '🖼️ 导出图片 ▾'; btn.disabled = false; };
+    document.head.appendChild(s);
+  }
+}
+
+function exportImage() {
+  const btn = document.getElementById('btn-export');
+  document.getElementById('export-menu').classList.remove('open');
+  const btnToggle = document.getElementById('btn-export-toggle');
+  if (btnToggle) { btnToggle.textContent = '⏳ 生成中...'; btnToggle.disabled = true; }
+  btn.textContent = '⏳ 生成中...';
+  btn.disabled = true;
+  function doExport() {
+    // 克隆一份以 A4 尺寸离屏渲染，保证导出结果与桌面完全一致
+    const page = document.querySelector('.page');
+    const clone = page.cloneNode(true);
+    // 桌面端：A4 固定尺寸；手机端：先量内容高，再加对称下边距后固定
+    const isMobile = isMobileDevice();
+    // 把编辑态 UI（删除按钮等）从克隆中清除
+    clone.querySelectorAll('.delete-btn,.rec-toggle,.rec-mark-del').forEach(el => el.remove());
+    clone.classList.remove('edit-mode');
+    // 强制恢复桌面 padding，防止手机 vw 单位影响克隆体
+    const cloneInner = clone.querySelector('.inner');
+    const TOP_PAD = '10mm', H_PAD = '32mm'; // 桌面内边距
+    if (cloneInner) cloneInner.style.cssText = `padding: ${TOP_PAD} ${H_PAD} ${TOP_PAD} ${H_PAD}; position: relative; z-index: 1;`;
+    if (isMobile) {
+      // 用页面加载时算好的满载固定高度（上下边距对称），菜品少时下方留白
+      const fixedH = window._mobileExportHeight || 1200;
+      clone.style.cssText = `position:fixed;left:-9999px;top:0;width:210mm;height:${fixedH}px;overflow:hidden;pointer-events:none;`;
+      document.body.appendChild(clone);
+    } else {
+      clone.style.cssText = 'position:fixed;left:-9999px;top:0;width:210mm;height:297mm;overflow:hidden;pointer-events:none;';
+      document.body.appendChild(clone);
+    }
+    html2canvas(clone, { scale: 3, useCORS: true, backgroundColor: '#FAF7F2', logging: false }).then(canvas => {
+      document.body.removeChild(clone);
+      canvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'coffee-menu.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 3000);
+        btn.textContent = '🖼️ 导出高清PNG';
+        btn.disabled = false;
+        const btnToggle = document.getElementById('btn-export-toggle');
+        if (btnToggle) { btnToggle.textContent = '🖼️ 导出图片 ▾'; btnToggle.disabled = false; }
+      }, 'image/png');
+    }).catch(() => {
+      document.body.removeChild(clone);
+      alert('导出失败，请重试');
+      btn.textContent = '🖼️ 导出高清PNG';
+      btn.disabled = false;
+      const btnToggle2 = document.getElementById('btn-export-toggle');
+      if (btnToggle2) { btnToggle2.textContent = '🖼️ 导出图片 ▾'; btnToggle2.disabled = false; }
+    });
+  }
+  if (window.html2canvas) { doExport(); }
+  else {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload = doExport;
+    s.onerror = () => { alert('需要联网才能导出'); btn.textContent = '🖼️ 导出高清PNG'; btn.disabled = false; };
+    document.head.appendChild(s);
+  }
+}
+
+function addItem() {
+  // 收集分类列表
+  const sections = [];
+  document.querySelectorAll('.section-title-cn, .season-title-cn').forEach(t => {
+    sections.push(t.textContent.trim());
+  });
+
+  // 创建自定义弹窗
+  const overlay = document.createElement('div');
+  overlay.id = 'add-item-modal';
+  overlay.innerHTML = `
+    <div id="aim-box">
+      <div id="aim-title">新增菜品</div>
+      <div id="aim-label">选择分类</div>
+      <div id="aim-cats">${sections.map((s,i) => `<button class="aim-cat" data-idx="${i}">${s}</button>`).join('')}</div>
+      <div id="aim-label2">菜品名称</div>
+      <input id="aim-name" type="text" placeholder="例：椰香拿铁" />
+      <div id="aim-label3">价格（元）</div>
+      <input id="aim-price" type="number" inputmode="decimal" placeholder="例：28" />
+      <div id="aim-btns">
+        <button id="aim-cancel">取消</button>
+        <button id="aim-confirm">确认添加</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  let selectedIdx = 0;
+  // 默认选中第一个分类
+  const firstCat = overlay.querySelector('.aim-cat');
+  if (firstCat) firstCat.classList.add('aim-cat-active');
+  overlay.querySelectorAll('.aim-cat').forEach(btn => {
+    btn.onclick = () => {
+      overlay.querySelectorAll('.aim-cat').forEach(b => b.classList.remove('aim-cat-active'));
+      btn.classList.add('aim-cat-active');
+      selectedIdx = parseInt(btn.dataset.idx);
+    };
+  });
+
+  overlay.querySelector('#aim-cancel').onclick = () => overlay.remove();
+
+  overlay.querySelector('#aim-confirm').onclick = () => {
+    if (selectedIdx === null || selectedIdx === undefined) { alert('请选择分类'); return; }
+    const name = overlay.querySelector('#aim-name').value.trim();
+    if (!name) { alert('请输入菜品名称'); return; }
+    const price = overlay.querySelector('#aim-price').value.trim();
+    if (!price) { alert('请输入价格'); return; }
+
+    overlay.remove();
+
+    const allTitles = document.querySelectorAll('.section-title-cn, .season-title-cn');
+    const container = allTitles[selectedIdx].closest('.section, .section-season');
+    const isSeason = container.classList.contains('section-season');
+    let insertTarget = container;
+    const twoCol = container.querySelector('.two-col');
+    if (twoCol) insertTarget = twoCol;
+    const newItem = document.createElement('div');
+    newItem.className = 'menu-item' + (isSeason ? ' season-item' : '');
+    newItem.style.position = 'relative';
+    newItem.innerHTML = `<span class="item-name" contenteditable="true" spellcheck="false">${name}</span><span class="item-dots"></span><span class="item-price" contenteditable="true" spellcheck="false">${price}</span><span class="item-unit">元</span>`;
+    const delBtn = document.createElement('button');
+    delBtn.className = 'delete-btn';
+    delBtn.textContent = '×';
+    delBtn.onclick = () => { if (confirm('确定删除？')) { newItem.remove(); checkCapacity(); } };
+    newItem.appendChild(delBtn);
+    const recToggle = document.createElement('span');
+    recToggle.className = 'rec-toggle';
+    recToggle.textContent = '＋♥ 推荐';
+    recToggle.onclick = () => {
+      const mark = document.createElement('span'); mark.className = 'rec-mark';
+      newItem.querySelector('.item-name').after(mark);
+      addRecMarkDel(mark, null);
+      recToggle.style.display = 'none';
+    };
+    newItem.querySelector('.item-name').after(recToggle);
+    insertTarget.appendChild(newItem);
+    checkCapacity();
+  };
+}
+
+const isMobileDevice = () => window.innerWidth <= 700;
+
+// 页面加载后执行（手机上跳过裁剪，显示全部菜品）
+window.addEventListener('load', function() {
+  calcMaxItems(); // 先算出最大容量，桌面/手机通用
+  if (!isMobileDevice()) {
+    trimToFitPrecise();
+  }
+  checkCapacity();
+  bindQrClick();
+});
+
+function qrFrameClick(e) { /* label 直接触发，此函数保留空壳 */ }
+function qrFileSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(r) {
+    const frame = document.querySelector('.qr-frame');
+    const img = frame.querySelector('.qr-img');
+    const placeholder = frame.querySelector('.qr-frame-placeholder');
+    if (img) { img.src = r.target.result; img.style.display = 'block'; }
+    if (placeholder) placeholder.style.display = 'none';
+    // 上传成功后隐藏遮罩，改为角落小提示
+    const hint = frame.querySelector('.qr-replace-hint');
+    if (hint) { hint.style.background = 'rgba(0,0,0,0.0)'; hint.style.fontSize = '9px'; hint.style.color = 'rgba(255,255,255,0.5)'; hint.textContent = '换图'; hint.style.alignItems = 'flex-end'; hint.style.justifyContent = 'flex-end'; hint.style.padding = '2px 4px'; }
+    input.value = ''; // 允许重复选同一张图
+  };
+  reader.readAsDataURL(file);
+}
+function bindQrClick() { /* 已改用 onclick，此函数保留空壳 */ }
+</script>
+</body>
+</html>

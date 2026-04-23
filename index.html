@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>菜单生成器 · 4套风格任选</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+    background: #F7F3EE;
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2C1810;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .header p {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:active { transform: scale(0.98); }
+  .card-thumb {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-thumb .label {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+  .card-body { padding: 16px 18px 20px; }
+  .card-title { font-size: 17px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: #888; line-height: 1.6; margin-bottom: 12px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .btn-open {
+    display: block;
+    margin: 12px 18px 0;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    font-size: 12px;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🍽️ 菜单生成器</h1>
+  <p>选择风格 · 编辑内容 · 导出图片<br>适合咖啡馆、奶茶店、夜宵摊、中餐厅</p>
+</div>
+
+<div class="grid">
+
+  <!-- A -->
+  <a class="card" href="template-a.html">
+    <div class="card-thumb" style="background: linear-gradient(135deg, #F5EDD8, #E8D5B0);">
+      <span class="label" style="color: #2C1810; font-family: serif;">COFFEE MENU</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">复古暖棕 · 咖啡馆</div>
+      <div class="card-desc">米白纸张质感，衬线字体，金色点缀，适合精品咖啡、下午茶、甜品店</div>
+      <div class="card-tags">
+        <span class="tag" style="background:#F5EDD8; color:#8B6355;">☕ 咖啡馆</span>
+        <span class="tag" style="background:#F5EDD8; color:#8B6355;">🍰 甜品</span>
+        <span class="tag" style="background:#F5EDD8; color:#8B6355;">🫖 下午茶</span>
+      </div>
+    </div>
+    <a class="btn-open" style="background: #8B6355;" href="template-a.html">打开模板 →</a>
+  </a>
+
+  <!-- B -->
+  <a class="card" href="template-b.html">
+    <div class="card-thumb" style="background: #1A1A1A;">
+      <span class="label" style="color: #fff; font-family: serif; letter-spacing: 0.3em;">MENU</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">极简黑白 · 日式</div>
+      <div class="card-desc">黑白极简，细线分隔，衬线字体，适合日料、轻食、简餐、精致小馆</div>
+      <div class="card-tags">
+        <span class="tag" style="background:#F0F0F0; color:#444;">🍱 日料</span>
+        <span class="tag" style="background:#F0F0F0; color:#444;">🥗 轻食</span>
+        <span class="tag" style="background:#F0F0F0; color:#444;">✨ 精致</span>
+      </div>
+    </div>
+    <a class="btn-open" style="background: #333;" href="template-b.html">打开模板 →</a>
+  </a>
+
+  <!-- C -->
+  <a class="card" href="template-c.html">
+    <div class="card-thumb" style="background: linear-gradient(135deg, #FFF0E8, #FFD6C0);">
+      <span class="label" style="color: #E8735A; font-family: cursive;">珍珠奶茶</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">活泼彩色 · 奶茶街头</div>
+      <div class="card-desc">珊瑚橙暖褐配色，圆润字体，活泼可爱，适合奶茶店、甜品、小吃街</div>
+      <div class="card-tags">
+        <span class="tag" style="background:#FFE8E0; color:#E8735A;">🧋 奶茶</span>
+        <span class="tag" style="background:#FFE8E0; color:#E8735A;">🍡 甜品</span>
+        <span class="tag" style="background:#FFE8E0; color:#E8735A;">🛍️ 街头</span>
+      </div>
+    </div>
+    <a class="btn-open" style="background: #E8735A;" href="template-c.html">打开模板 →</a>
+  </a>
+
+  <!-- D -->
+  <a class="card" href="template-d.html">
+    <div class="card-thumb" style="background: #B80000;">
+      <span class="label" style="color: #FEED1B; font-weight: 900;">宵夜小摊</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">中式红金 · 喜庆热闹</div>
+      <div class="card-desc">大红底色，亮黄牌匾标题，白色正文，适合烧烤摊、夜宵、中餐、小炒</div>
+      <div class="card-tags">
+        <span class="tag" style="background:#FFF0E0; color:#B80000;">🔥 烧烤</span>
+        <span class="tag" style="background:#FFF0E0; color:#B80000;">🌙 夜宵</span>
+        <span class="tag" style="background:#FFF0E0; color:#B80000;">🍜 中餐</span>
+      </div>
+    </div>
+    <a class="btn-open" style="background: #B80000;" href="template-d.html">打开模板 →</a>
+  </a>
+
+</div>
+
+<div class="footer">
+  点击模板 · 编辑菜单 · 导出图片<br>
+  支持手机操作 · 导出高清PNG
+</div>
+
+</body>
+</html>

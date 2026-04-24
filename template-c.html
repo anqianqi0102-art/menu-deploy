@@ -447,6 +447,52 @@ position: relative;
       min-height: 297mm;
     }
   }
+
+/* 微信保存图片遮罩 */
+#wx-preview-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  overflow: hidden;
+}
+#wx-preview-overlay.show { display: block; }
+#wx-preview-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#wx-preview-close {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 36px;
+  height: 36px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  line-height: 36px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 10000;
+}
+#wx-preview-tip {
+  position: absolute;
+  bottom: 15%;
+  left: 0; right: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+  background: rgba(0,0,0,0.45);
+  padding: 10px 20px;
+  pointer-events: none;
+}
+
+  .section-line { display: none; }
+  .season-line { display: none; }
 </style>
 </head>
 <body>
@@ -1058,14 +1104,20 @@ function exportMobile() {
     // 直接截当前页面渲染结果（手机宽度、vw字体、紧凑边距）
     html2canvas(page, { scale: 3, useCORS: true, backgroundColor: '#FAF7F2', logging: false }).then(canvas => {
       canvas.toBlob(function(blob) {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'coffee-menu-share.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 3000);
+        if (isWeixin()) {
+          const reader = new FileReader();
+          reader.onload = function(e) { showWxPreview(e.target.result); };
+          reader.readAsDataURL(blob);
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'coffee-menu-share.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 3000);
+        }
         btn.textContent = '🖼️ 导出图片 ▾';
         btn.disabled = false;
       }, 'image/png');
@@ -1117,14 +1169,20 @@ function exportImage() {
     html2canvas(clone, { scale: 3, useCORS: true, backgroundColor: '#FAF7F2', logging: false }).then(canvas => {
       document.body.removeChild(clone);
       canvas.toBlob(function(blob) {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'coffee-menu.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 3000);
+        if (isWeixin()) {
+          const reader = new FileReader();
+          reader.onload = function(e) { showWxPreview(e.target.result); };
+          reader.readAsDataURL(blob);
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'coffee-menu.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 3000);
+        }
         btn.textContent = '🖼️ 导出高清PNG';
         btn.disabled = false;
         const btnToggle = document.getElementById('btn-export-toggle');
@@ -1263,6 +1321,24 @@ function qrFileSelected(input) {
   reader.readAsDataURL(file);
 }
 function bindQrClick() { /* 已改用 onclick，此函数保留空壳 */ }
+
+function isWeixin() {
+  return /micromessenger/i.test(navigator.userAgent);
+}
+function showWxPreview(dataUrl) {
+  const overlay = document.getElementById('wx-preview-overlay');
+  document.getElementById('wx-preview-img').src = dataUrl;
+  overlay.classList.add('show');
+}
+
 </script>
+
+<!-- 微信保存图片遮罩 -->
+<div id="wx-preview-overlay">
+  <button id="wx-preview-close" onclick="document.getElementById('wx-preview-overlay').classList.remove('show')">✕</button>
+  <img id="wx-preview-img" src="" alt="菜单图片">
+  <div id="wx-preview-tip">长按图片保存到相册</div>
+</div>
+
 </body>
 </html>
